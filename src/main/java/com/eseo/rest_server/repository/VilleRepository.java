@@ -1,7 +1,7 @@
 package com.eseo.rest_server.repository;
 
 
-import com.eseo.rest_server.Ville;
+import com.eseo.rest_server.entity.Ville;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

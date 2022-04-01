@@ -1,12 +1,11 @@
 package com.eseo.rest_server.service;
 
-import com.eseo.rest_server.Ville;
+import com.eseo.rest_server.entity.Ville;
 import com.eseo.rest_server.dto.VilleDto;
 import com.eseo.rest_server.repository.VilleRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class VilleService {

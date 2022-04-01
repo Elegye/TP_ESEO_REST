@@ -1,4 +1,4 @@
-package com.eseo.rest_server;
+package com.eseo.rest_server.entity;
 
 import lombok.Data;
 

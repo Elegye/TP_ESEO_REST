@@ -1,5 +1,5 @@
 package com.eseo.rest_server.controller;
-import com.eseo.rest_server.Ville;
+import com.eseo.rest_server.entity.Ville;
 import com.eseo.rest_server.dto.VilleDto;
 import com.eseo.rest_server.service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
