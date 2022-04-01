@@ -1,10 +1,10 @@
 package com.eseo.rest_server.controller;
+
 import com.eseo.rest_server.entity.Ville;
 import com.eseo.rest_server.dto.VilleDto;
 import com.eseo.rest_server.service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping(value="/ville")
@@ -35,6 +35,10 @@ public class VilleController {
     @DeleteMapping(value="/delete/{id}")
     public void delete(@PathVariable(value="id") String inseeCode){
         this.villeService.deleteVille(inseeCode);
+    }
+
+    public void getDistance(@RequestParam(name = "from") String from, @RequestParam(name = "to") String to) {
+        this.villeService.getDistance(from, to);
     }
 
 }
