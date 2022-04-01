@@ -63,4 +63,45 @@ public class VilleService {
             throw new ObjectNotFoundException(ville.getInseeCode(), "Record does not exist !");
         }
     }
+
+    public int getDistance(String fromInseeCode, String toInseeCode) throws ObjectNotFoundException{
+        Ville from, to;
+
+        try{
+            from = this.villeRepository.findOneByInseeCode(fromInseeCode);
+        }
+        catch (IllegalArgumentException e){
+            throw new ObjectNotFoundException(fromInseeCode, "Record does not exist !");
+        }
+
+        try{
+            to = this.villeRepository.findOneByInseeCode(toInseeCode);
+        }
+        catch (IllegalArgumentException e){
+            throw new ObjectNotFoundException(toInseeCode, "Record does not exist !");
+        }
+
+        double lon1 = Double.parseDouble(from.getLon());
+        double lon2 = Double.parseDouble(to.getLon());
+        double lat1 = Double.parseDouble(from.getLat());
+        double lat2 = Double.parseDouble(to.getLat());
+
+        lon1 = Math.toRadians(lon1);
+        lon2 = Math.toRadians(lon2);
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+
+        double dlon = lon2 - lon1;
+        double dlat = lat2 - lat1;
+        double a = Math.pow(Math.sin(dlat / 2), 2)
+                + Math.cos(lat1) * Math.cos(lat2)
+                * Math.pow(Math.sin(dlon / 2),2);
+
+        double c = 2 * Math.asin(Math.sqrt(a));
+
+        double r = 6371*1000;
+
+        return (int) Math.round(c * r);
+
+    }
 }
