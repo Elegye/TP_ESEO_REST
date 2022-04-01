@@ -65,7 +65,8 @@ public class VilleService {
     }
 
     public int getDistance(String fromInseeCode, String toInseeCode) throws ObjectNotFoundException{
-        Ville from, to;
+        Ville from;
+        Ville to;
 
         try{
             from = this.villeRepository.findOneByInseeCode(fromInseeCode);
