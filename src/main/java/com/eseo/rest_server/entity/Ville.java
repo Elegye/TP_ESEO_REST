@@ -1,5 +1,6 @@
 package com.eseo.rest_server.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="ville_france")
+@Builder
 @Data public class Ville {
 
     @Id
@@ -33,4 +35,10 @@ import javax.persistence.Table;
     @Column(name = "longitude")
     private String lon;
 
+    public Ville() {
+        
+    }
+
+    public Ville(String inseeCode, String name, String postalCode, String label, String ligne5, String lat, String lon) {
+    }
 }
