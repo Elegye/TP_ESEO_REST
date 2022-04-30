@@ -6,6 +6,9 @@ import com.eseo.rest_server.service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping(value="/ville")
 public class VilleController {
@@ -14,12 +17,17 @@ public class VilleController {
     private VilleService villeService;
 
     @GetMapping()
-    public @ResponseBody Iterable<Ville> get(
+    public @ResponseBody Object get(
             @RequestParam(required=false, value="postalCode") String postalCode,
             @RequestParam(required=false, value="name") String name,
             @RequestParam(required=false, value="inseeCode") String inseeCode
     ) {
-        return this.villeService.getVilles(postalCode, name, inseeCode);
+        List<Ville> villes = new ArrayList<>();
+        this.villeService.getVilles(postalCode, name, inseeCode).iterator().forEachRemaining(villes::add);
+        if(villes.size() == 1){
+            return villes.get(0);
+        }
+        return villes;
     }
 
     @PostMapping(value="/create")
@@ -28,17 +36,13 @@ public class VilleController {
     }
 
     @PutMapping(value="/edit")
-    public void put(@RequestBody Ville ville){
+    public void put(@RequestBody VilleDto ville){
         this.villeService.updateVille(ville);
     }
 
     @DeleteMapping(value="/delete/{id}")
     public void delete(@PathVariable(value="id") String inseeCode){
         this.villeService.deleteVille(inseeCode);
-    }
-
-    public void getDistance(@RequestParam(name = "from") String from, @RequestParam(name = "to") String to) {
-        this.villeService.getDistance(from, to);
     }
 
 }

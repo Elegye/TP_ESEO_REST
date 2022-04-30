@@ -32,16 +32,8 @@ public class VilleService {
     }
 
     public Ville addVille(VilleDto villeDto){
-        Ville ville = new Ville();
 
-        ville.setInseeCode(villeDto.getCodeINSEE());
-        ville.setName(villeDto.getName());
-        ville.setLabel(villeDto.getLabel());
-        ville.setLat(villeDto.getLat());
-        ville.setLon(villeDto.getLon());
-        ville.setPostalCode(villeDto.getPostalCode());
-
-        villeRepository.save(ville);
+        Ville ville = villeRepository.save(this.hydrate(villeDto));
 
         return ville;
     }
@@ -55,54 +47,26 @@ public class VilleService {
         }
     }
 
-    public void updateVille(Ville ville) throws ObjectNotFoundException{
+    public void updateVille(VilleDto villeDto) throws ObjectNotFoundException{
         try{
-            villeRepository.save(ville);
+            villeRepository.save(this.hydrate(villeDto));
         }
         catch (IllegalArgumentException e){
-            throw new ObjectNotFoundException(ville.getInseeCode(), "Record does not exist !");
+            throw new ObjectNotFoundException(villeDto.getInseeCode(), "Record does not exist !");
         }
     }
 
-    public int getDistance(String fromInseeCode, String toInseeCode) throws ObjectNotFoundException{
-        Ville from;
-        Ville to;
+    public Ville hydrate(VilleDto villeDto){
+        Ville ville = new Ville();
 
-        try{
-            from = this.villeRepository.findOneByInseeCode(fromInseeCode);
-        }
-        catch (IllegalArgumentException e){
-            throw new ObjectNotFoundException(fromInseeCode, "Record does not exist !");
-        }
+        ville.setInseeCode(villeDto.getInseeCode());
+        ville.setName(villeDto.getName());
+        ville.setLabel(villeDto.getLabel());
+        ville.setLat(villeDto.getLat());
+        ville.setLon(villeDto.getLon());
+        ville.setPostalCode(villeDto.getPostalCode());
+        ville.setLigne5(villeDto.getLine5());
 
-        try{
-            to = this.villeRepository.findOneByInseeCode(toInseeCode);
-        }
-        catch (IllegalArgumentException e){
-            throw new ObjectNotFoundException(toInseeCode, "Record does not exist !");
-        }
-
-        double lon1 = Double.parseDouble(from.getLon());
-        double lon2 = Double.parseDouble(to.getLon());
-        double lat1 = Double.parseDouble(from.getLat());
-        double lat2 = Double.parseDouble(to.getLat());
-
-        lon1 = Math.toRadians(lon1);
-        lon2 = Math.toRadians(lon2);
-        lat1 = Math.toRadians(lat1);
-        lat2 = Math.toRadians(lat2);
-
-        double dlon = lon2 - lon1;
-        double dlat = lat2 - lat1;
-        double a = Math.pow(Math.sin(dlat / 2), 2)
-                + Math.cos(lat1) * Math.cos(lat2)
-                * Math.pow(Math.sin(dlon / 2),2);
-
-        double c = 2 * Math.asin(Math.sqrt(a));
-
-        double r = 6371*1000;
-
-        return (int) Math.round(c * r);
-
+        return ville;
     }
 }

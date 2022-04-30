@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data public class VilleDto {
 
-    private String codeINSEE;
+    private String inseeCode;
 
     private String name;
 
@@ -12,7 +12,7 @@ import lombok.Data;
 
     private String label;
 
-    private String ligne5;
+    private String line5;
 
     private String lat;
 
